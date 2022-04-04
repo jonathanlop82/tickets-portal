@@ -1,0 +1,9 @@
+body {
+    background-color: lightgray;
+    text-align: center;
+}
+
+.content-table {
+    padding: 2% 15%;
+    font-size: 40px;
+}
