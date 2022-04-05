@@ -2,28 +2,34 @@
 
 {% block content %}
 
-<h1>Tickets pendientes</h1>
+<h1>Tickets Pendientes</h1>
 <h3>Total: {{ all_tickets }}</h3>
+<h3 class="delayed">Atrasados: {{ tickets_delayed }}</h3>
 <div class="content-table">
-    <table class="table table-striped table-dark">
-        <thead>
-        <tr>
-            <th scope="col">Usuario</th>
-            <th scope="col">Tickets pendientes</th>
-        </tr>
-        </thead>
-        <tbody>
-            {% for user_count in tickets %}
-
+    <div class="table-border">
+        <table class="table table-striped table-dark">
+            <thead>
             <tr>
-                <td>{{ user_count["user"] }}</td>
-                <td>{{ user_count["count"] }}</td>
+                <th scope="col">Usuario</th>
+                <th scope="col">Cerrados</th>
+                <th scope="col">Pendientes</th>
             </tr>
-
-            {% endfor %}
-
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for user_count in tickets %}
+    
+                <tr>
+                    <td>{{ user_count["user"] }}</td>
+                    <td class="closed">{{ user_count["closed"] }}</td>
+                    <td>{{ user_count["count"] }}</td>
+                </tr>
+    
+                {% endfor %}
+    
+            </tbody>
+        </table>
+    </div>
+    
 </div>
 
 {% endblock %}
