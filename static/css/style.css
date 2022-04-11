@@ -5,21 +5,45 @@ body {
 
 h1 {
     font-weight: bold;
+    font-family: 'Lalezar', cursive;
+    padding-top: 2%;
+}
+
+.head-table {
+    padding: 1% 40%;
+}
+
+.delayed-10 {
+    color:darkgoldenrod;
+}
+
+.delayed-30 {
+    color: red;
 }
 
 .content-table {
-    padding: 2% 15%;
+    padding: 1% 15%;
     font-size: 40px;
 }
 
-.table-border {
-    box-shadow: 15px 15px 20px;
-}
-
-.delayed {
-    color: red;
+.table-border:hover {
+    box-shadow: 0 10px 10px 8px #888888;
 }
 
 .closed {
     color: greenyellow;
 }
+
+@media (max-width: 600px) {
+    .content-table {
+        font-size: 20px;
+        padding: 1% 10%;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+
+    .head-table {
+        padding: 1% 20%;
+    }

@@ -3,8 +3,25 @@
 {% block content %}
 
 <h1>Tickets Pendientes</h1>
-<h3>Total: {{ all_tickets }}</h3>
-<h3 class="delayed">Atrasados: {{ tickets_delayed }}</h3>
+
+<!-- Tabla de estatus -->
+
+<div class="head-table">
+    <table class="table table-hover">
+        <tbody>
+          <tr class="table-secondary">
+            <td><h3>Total: {{ all_tickets }}</h3></td>
+          </tr>
+          <tr class="table-warning">
+            <td><h3 class="delayed-10">Atrasados +10 días: {{ tickets_delayed_10 }}</h3></td>
+          </tr>
+          <tr class="table-danger">
+            <td><h3 class="delayed-30">Atrasados +30 días: {{ tickets_delayed_30 }}</h3></td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+
 <div class="content-table">
     <div class="table-border">
         <table class="table table-striped table-dark">
