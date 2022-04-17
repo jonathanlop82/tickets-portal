@@ -19,14 +19,14 @@ def list_tickets():
     query_tickets_closed = (
         hesk_tickets.select(hesk_users.user, fn.count(hesk_tickets.id))
         .join(hesk_users, on=(hesk_tickets.owner == hesk_users.id))
-        .where((hesk_tickets.status == 3) & (hesk_tickets.dt > current_month))
+        .where((hesk_tickets.status == 3) & (hesk_tickets.category << [3, 4, 5]) & (hesk_tickets.dt > current_month))
         .group_by(hesk_tickets.owner)
         .dicts()
     )
 
     total_tickets = (
         hesk_tickets.select(fn.COUNT(hesk_tickets.id).alias("count"))
-        .where(hesk_tickets.status << [0, 1, 2])
+        .where(hesk_tickets.status << [0, 1, 2] & (hesk_tickets.category << [3, 4, 5]))
         .dicts()
     )
     query = (
@@ -34,7 +34,7 @@ def list_tickets():
             hesk_users.user.alias("user"), fn.COUNT(hesk_tickets.id).alias("count")
         )
         .join(hesk_users, on=(hesk_tickets.owner == hesk_users.id))
-        .where(hesk_tickets.status << [0, 1, 2])
+        .where(hesk_tickets.status << [0, 1, 2] & (hesk_tickets.category << [3, 4, 5]))
         .group_by(hesk_tickets.owner)
         .dicts()
     )
@@ -59,7 +59,7 @@ def get_tickets_delayed():
     tickets_delayed_30 = 0
     query = (
         hesk_tickets.select(hesk_tickets.id, hesk_tickets.dt)
-        .where(hesk_tickets.status << [0, 1, 2])
+        .where(hesk_tickets.status << [0, 1, 2] & (hesk_tickets.category << [3, 4, 5]))
         .dicts()
     )
     for row in query:
