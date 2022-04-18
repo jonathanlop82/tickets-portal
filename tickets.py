@@ -44,7 +44,7 @@ def list_tickets():
     for row in query:
         user_count = {}
         user, count = row.values()
-        user_count["user"] = user
+        user_count["user"] = user.upper()
         user_count["count"] = count
         user_count["closed"] = 0
         for ticket_row in query_tickets_closed:
@@ -74,3 +74,42 @@ def get_tickets_delayed():
             tickets_delayed_10 += 1
     return tickets_delayed_30, tickets_delayed_10
 
+def get_users():
+    list_users = []
+    query = (
+        hesk_users.select(hesk_users.user)
+        .where((hesk_users.categories << [3,4,5,'3,4,5']) & (hesk_users.user != 'danieladiaz'))
+        .dicts()
+    )
+    for row in query:
+        list_users.append(row['user'])
+
+    return list_users
+
+def get_tickets_by_user(user):
+    tickets_user = []
+    query = (
+        hesk_tickets.select(hesk_tickets.subject)
+        .join(hesk_users, on=(hesk_tickets.owner == hesk_users.id))
+        .where(hesk_tickets.status << [0, 1, 2] & (hesk_tickets.category << [3, 4, 5]) & (hesk_users.user == user))
+        .dicts()
+    )
+    for row in query:
+        tickets_user.append(row['subject'])
+
+    return tickets_user
+
+def get_tickets_by_users():
+    list_tickets_users = []
+    users_list = get_users()
+    for user in users_list:
+        tickets_user = {}
+        tickets = get_tickets_by_user(user)
+        if tickets != []:
+            tickets_user = {
+                'user':user.upper(),
+                'tickets':tickets
+            }
+            list_tickets_users.append(tickets_user)
+
+    return list_tickets_users

@@ -23,7 +23,13 @@ h1 {
 
 .content-table {
     padding: 1% 15%;
+    padding-bottom: 2%;
     font-size: 30px;
+}
+
+.tickets-list {
+    padding: 1% 15%;
+    padding-bottom: 2%;
 }
 
 .table-border:hover {

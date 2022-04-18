@@ -8,12 +8,16 @@ app = Flask(__name__)
 def index():
     list_tickets_users, all_tickets = tickets.list_tickets()
     tickets_delayed_30, tickets_delayed_10 = tickets.get_tickets_delayed()
+    tickets_detail_user = tickets.get_tickets_by_users()
+    count_users = len(tickets_detail_user)
     return render_template(
         "index.html",
         tickets=list_tickets_users,
         all_tickets=all_tickets,
         tickets_delayed_30=tickets_delayed_30,
-        tickets_delayed_10=tickets_delayed_10
+        tickets_delayed_10=tickets_delayed_10,
+        tickets_detail_user=tickets_detail_user,
+        count_users=count_users
     )
 
 
