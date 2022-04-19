@@ -78,7 +78,7 @@ def get_users():
     list_users = []
     query = (
         hesk_users.select(hesk_users.user)
-        .where((hesk_users.categories << [3,4,5,'3,4,5']) & (hesk_users.user != 'danieladiaz'))
+        .where((hesk_users.categories << [3,4,5,'3,4,5','3,4,5,6']) & (hesk_users.user != 'danieladiaz'))
         .dicts()
     )
     for row in query:

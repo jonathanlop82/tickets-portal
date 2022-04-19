@@ -3,14 +3,18 @@ body {
     text-align: center;
 }
 
-h1 {
+h2 {
     font-weight: bold;
-    font-family: 'Lalezar', cursive;
+    font-family: 'Montserrat', cursive;
     padding-top: 2%;
 }
 
+.jumbotron {
+    padding: 10px;
+}
+
 .head-table {
-    padding: 1% 40%;
+    padding: 1% 25%;
 }
 
 .delayed-10 {
@@ -32,7 +36,7 @@ h1 {
     padding-bottom: 2%;
 }
 
-.table-border:hover {
+.table-border {
     box-shadow: 0 10px 10px 8px #888888;
 }
 
