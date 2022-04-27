@@ -19,14 +19,14 @@ def list_tickets():
     query_tickets_closed = (
         hesk_tickets.select(hesk_users.user, fn.count(hesk_tickets.id))
         .join(hesk_users, on=(hesk_tickets.owner == hesk_users.id))
-        .where((hesk_tickets.status == 3) & (hesk_tickets.category << [3, 4, 5]) & (hesk_tickets.dt > current_month))
+        .where((hesk_tickets.status == 3) & (hesk_tickets.category << [3, 4, 5, 6, 7]) & (hesk_tickets.dt > current_month))
         .group_by(hesk_tickets.owner)
         .dicts()
     )
 
     total_tickets = (
         hesk_tickets.select(fn.COUNT(hesk_tickets.id).alias("count"))
-        .where(hesk_tickets.status << [0, 1, 2] & (hesk_tickets.category << [3, 4, 5]))
+        .where(hesk_tickets.status << [0, 1, 2] & (hesk_tickets.category << [3, 4, 5,6,7]))
         .dicts()
     )
     query = (
@@ -34,7 +34,7 @@ def list_tickets():
             hesk_users.user.alias("user"), fn.COUNT(hesk_tickets.id).alias("count")
         )
         .join(hesk_users, on=(hesk_tickets.owner == hesk_users.id))
-        .where(hesk_tickets.status << [0, 1, 2] & (hesk_tickets.category << [3, 4, 5]))
+        .where(hesk_tickets.status << [0, 1, 2] & (hesk_tickets.category << [3, 4, 5, 6, 7]))
         .group_by(hesk_tickets.owner)
         .dicts()
     )
@@ -59,7 +59,7 @@ def get_tickets_delayed():
     tickets_delayed_30 = 0
     query = (
         hesk_tickets.select(hesk_tickets.id, hesk_tickets.dt)
-        .where(hesk_tickets.status << [0, 1, 2] & (hesk_tickets.category << [3, 4, 5]))
+        .where(hesk_tickets.status << [0, 1, 2] & (hesk_tickets.category << [3, 4, 5, 6, 7]))
         .dicts()
     )
     for row in query:
@@ -78,7 +78,7 @@ def get_users():
     list_users = []
     query = (
         hesk_users.select(hesk_users.user)
-        .where((hesk_users.categories << [3,4,5,'3,4,5','3,4,5,6']) & (hesk_users.user != 'danieladiaz'))
+        .where((hesk_users.categories << [3,4,5,6,7,'3,4,5','3,4,5,6','5,7','3,4,5,7','3,7','3,4,5,6','4,7','3,4,5,6,7']) & (hesk_users.user != 'danieladiaz'))
         .dicts()
     )
     for row in query:
@@ -91,7 +91,7 @@ def get_tickets_by_user(user):
     query = (
         hesk_tickets.select(hesk_tickets.subject)
         .join(hesk_users, on=(hesk_tickets.owner == hesk_users.id))
-        .where(hesk_tickets.status << [0, 1, 2] & (hesk_tickets.category << [3, 4, 5]) & (hesk_users.user == user))
+        .where(hesk_tickets.status << [0, 1, 2] & (hesk_tickets.category << [3, 4, 5, 6, 7]) & (hesk_users.user == user))
         .dicts()
     )
     for row in query:
@@ -111,5 +111,13 @@ def get_tickets_by_users():
                 'tickets':tickets
             }
             list_tickets_users.append(tickets_user)
-
     return list_tickets_users
+
+def get_tickets_by_category(id):
+    query = (hesk_tickets.select(hesk_tickets.subject, hesk_users.user)
+            .join(hesk_users, on=(hesk_tickets.owner == hesk_users.id))
+            .where((hesk_tickets.category == id) & (hesk_tickets.status << [0, 1, 2]))
+            .dicts())
+    return query
+
+    
